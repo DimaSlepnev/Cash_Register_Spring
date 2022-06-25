@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+</head>
+<body>
+<div th:insert="header"></div>
+<h1> <span th:text="|#{menu.logged.as} ${employee.position.iterator().next()} ${employee.firstName} ${employee.secondName}|"/></h1>
+
+</body>
+</html>

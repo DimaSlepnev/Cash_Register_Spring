@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Creation of product</title>
+</head>
+<body>
+<div th:insert="header"></div>
+
+<center>
+<form th:action="@{/createProduct}" th:method="POST">
+    <div class="form-group">
+        <label for="formGroupExampleInput" class="col-sm-2 col-form-label" th:text="#{label.product}">Product</label>
+        <input type="text"  name="product"   style="width: 300px;height: 40px" class="form-control" id="formGroupExampleInput" th:placeholder="#{input.product}" required="required" pattern="^[A-Z][a-z\s]+|[А-ЯІЇҐЄ][а-яіїєґ\s]+$">
+    </div>
+    </div>
+    <div class="form-group">
+        <label for="formGroupExampleInput2" class="col-sm-2 col-form-label" th:text="#{label.amount}">Amount</label>
+        <input type="number" name="amount" style="width: 300px;height: 40px" class="form-control" id="formGroupExampleInput2" th:placeholder="#{input.amount}" min="1" required="required">
+    </div>
+    </div>
+    <button class="btn btn-primary btn-lg btn-block" type="submit" th:text="#{button.confirm}">Confirm</button>
+</form>
+</center>
+</body>
+</html>

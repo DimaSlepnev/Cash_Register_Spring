@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Report</title>
+</head>
+<body>
+<div th:insert="header"></div>
+<center>
+    <form th:action="@{/createReport/xReport}" th:method="POST">
+        <button type="submit" class="btn btn-outline-info" th:text="#{button.create.x.report}">Create X-Report</button>
+    </form>
+    <form th:action="@{/createReport/zReport}" th:method="POST">
+        <button type="submit" class="btn btn-outline-info" th:text="#{button.create.z.report}">Create Z-Report</button>
+    </form>
+</center>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete employee</title>
+</head>
+<body>
+<div th:insert="header"></div>
+<center>
+    <form th:action="@{/deleteEmployee}" th:method="POST" th:object="${employee}">
+        <div class="form-group row" >
+            <label class="col-sm-2 col-form-label" th:text="#{label.id }">Id</label>
+            <div class="col-sm-10">
+                <span th:text="${employee.employeeId}"/>
+                <input name="id" type="hidden" th:value="${employee.employeeId}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{select.position}">Position</label>
+            <div class="col-sm-10">
+                <span th:text="${employee.position.iterator().next()}"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{label.firstName}">Name</label>
+            <div class="col-sm-10">
+                <span th:text="${employee.firstName}"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" th:text="#{label.secondName}">Surname:</label>
+            <div class="col-sm-10">
+                <span th:text="${employee.secondName}"/>
+            </div>
+        </div>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit" th:text="#{button.delete}">Delete</button>
+    </form>
+</center>
+</body>
+</html>
