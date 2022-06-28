@@ -21,21 +21,30 @@ public class DeleteBillController {
     WarehouseService warehouseService;
 
     @GetMapping("/deleteBill")
-    public String goToDeleteBillPage(Model model, @RequestParam("idDelete") int id) {
+    public String goToDeleteBillPage(Model model, @RequestParam("idDelete") int id,
+                                     @RequestParam("pageNumber") int pageNumber,
+                                     @RequestParam("sortField") String sortField,
+                                     @RequestParam("sortDirection") String sortDirection) {
         Bill bill = billService.findBillById(id);
         model.addAttribute("bill", bill);
+        model.addAttribute("pageNumber", pageNumber);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDirection", sortDirection);
         return "deleteBill";
     }
 
     @PostMapping("/deleteBill")
     public String deleteBill(Model model,
                              @RequestParam("id") int id,
-                             @RequestParam("amount") int amount) {
+                             @RequestParam("amount") int amount,
+                             @RequestParam("pageNumber") int pageNumber,
+                             @RequestParam("sortField") String sortField,
+                             @RequestParam("sortDirection") String sortDirection) {
         Bill bill = billService.findBillById(id);
         Warehouse warehouse = warehouseService.findByProduct(bill.getBody());
         warehouse.setAmount(warehouse.getAmount() + bill.getAmount());
         warehouseService.save(warehouse);
         billService.deleteBillById(id);
-        return "redirect:showAllBills/1?sortField=billId&sortDirection=ASC";
+        return "redirect:/showAllBills?pageNumber=" + pageNumber + "&sortField=" + sortField + "&sortDirection=" + sortDirection;
     }
 }

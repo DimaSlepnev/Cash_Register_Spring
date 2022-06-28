@@ -3,6 +3,8 @@ package org.example.controllers;
 
 import org.example.model.Bill;
 import org.example.secvices.BillService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/createReport")
 public class CreateReportController {
+
+    private static Logger logger = LoggerFactory.getLogger(CreateReportController.class);
 
     @Autowired
     BillService billService;
@@ -33,6 +37,7 @@ public class CreateReportController {
                 xReport+=bill.getPrice();
             }
         }
+        logger.info("X-report was created sum is :{}", xReport);
         model.addAttribute("xReport",xReport);
         return "xReportPopUp";
     }
@@ -47,6 +52,7 @@ public class CreateReportController {
                 billService.deleteBillById(bill.getBillId());
             }
         }
+        logger.info("Z-report was created sum is :{}", zReport);
         model.addAttribute("zReport",zReport);
         return "zReportPopUp";
     }

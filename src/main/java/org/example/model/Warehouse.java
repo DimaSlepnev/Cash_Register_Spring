@@ -27,4 +27,13 @@ public class Warehouse {
     @JoinColumn(name = "emp_id")
     private Employee employee;
 
+    @Override
+    public String toString() {
+        return "Warehouse{" +
+                "productId=" + productId +
+                ", product='" + product + '\'' +
+                ", amount=" + amount +
+                ", employee=" + employee +
+                '}';
+    }
 }

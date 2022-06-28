@@ -14,65 +14,74 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th scope="col" th:text="#{label.id}">Id
-            <form th:action="@{'/showAllEmployees/' + ${currentPage}}">
+        <th scope="col"> <span th:text="#{label.id}"/>
+            <form th:action="@{/showAllEmployees}">
                 <button class="btn btn-outline-primary" type="submit">
                     <i class="bi bi-arrow-bar-up"></i>
-                    <input type="hidden" th:name="sortField" th:value="employeeId">
-                    <input type="hidden" th:name="sortDirection" th:value="ASC">
                 </button>
+                <input type="hidden" th:name="pageNumber" th:value="${currentPage}">
+                <input type="hidden" th:name="sortField" th:value="employeeId">
+                <input type="hidden" th:name="sortDirection" th:value="ASC">
             </form>
-            <form th:action="@{'/showAllEmployees/' + ${currentPage}}">
+            <form th:action="@{/showAllEmployees}">
+
                 <button class="btn btn-outline-primary" type="submit">
                     <i class="bi bi-arrow-bar-down"></i>
-                    <input type="hidden" th:name="sortField" th:value="employeeId">
-                    <input type="hidden" th:name="sortDirection" th:value="DESC">
                 </button>
+                <input type="hidden" th:name="pageNumber" th:value="${currentPage}">
+                <input type="hidden" th:name="sortField" th:value="employeeId">
+                <input type="hidden" th:name="sortDirection" th:value="DESC">
             </form>
         </th>
-        <th scope="col" th:text="#{select.position}">Position
-            <form th:action="@{'/showAllEmployees/' + ${currentPage}}">
+        <th scope="col"><span th:text="#{select.position}"/>
+            <form th:action="@{/showAllEmployees}">
                 <button class="btn btn-outline-primary" type="submit">
                     <i class="bi bi-arrow-bar-up"></i>
+                    <input type="hidden" th:name="pageNumber" th:value="${currentPage}">
                     <input type="hidden" th:name="sortField" th:value="position">
                     <input type="hidden" th:name="sortDirection" th:value="ASC">
                 </button>
             </form>
-            <form th:action="@{'/showAllEmployees/' + ${currentPage}}">
+            <form th:action="@{/showAllEmployees}">
                 <button class="btn btn-outline-primary" type="submit">
                     <i class="bi bi-arrow-bar-down"></i>
+                    <input type="hidden" th:name="pageNumber" th:value="${currentPage}">
                     <input type="hidden" th:name="sortField" th:value="position">
                     <input type="hidden" th:name="sortDirection" th:value="DESC">
                 </button>
             </form>
         </th>
-        <th scope="col" th:text="#{label.firstName}">Name
-            <form th:action="@{'/showAllEmployees/' + ${currentPage}}">
+        <th scope="col"> <span th:text="#{label.firstName}"/>
+            <form th:action="@{/showAllEmployees}">
                 <button class="btn btn-outline-primary" type="submit">
                     <i class="bi bi-arrow-bar-up"></i>
+                    <input type="hidden" th:name="pageNumber" th:value="${currentPage}">
                     <input type="hidden" th:name="sortField" th:value="firstName">
                     <input type="hidden" th:name="sortDirection" th:value="ASC">
                 </button>
             </form>
-            <form th:action="@{'/showAllEmployees/' + ${currentPage}}">
+            <form th:action="@{/showAllEmployees}">
                 <button class="btn btn-outline-primary" type="submit">
                     <i class="bi bi-arrow-bar-down"></i>
+                    <input type="hidden" th:name="pageNumber" th:value="${currentPage}">
                     <input type="hidden" th:name="sortField" th:value="firstName">
                     <input type="hidden" th:name="sortDirection" th:value="DESC">
                 </button>
             </form>
         </th>
-        <th scope="col" th:text="#{label.secondName}">Surname
-            <form th:action="@{'/showAllEmployees/' + ${currentPage}}">
+        <th scope="col"><span th:text="#{label.secondName}"/>
+            <form th:action="@{/showAllEmployees}">
                 <button class="btn btn-outline-primary" type="submit">
                     <i class="bi bi-arrow-bar-up"></i>
+                    <input type="hidden" th:name="pageNumber" th:value="${currentPage}">
                     <input type="hidden" th:name="sortField" th:value="secondName">
                     <input type="hidden" th:name="sortDirection" th:value="ASC">
                 </button>
             </form>
-            <form th:action="@{'/showAllEmployees/' + ${currentPage}}">
+            <form th:action="@{/showAllEmployees}">
                 <button class="btn btn-outline-primary" type="submit">
                     <i class="bi bi-arrow-bar-down"></i>
+                    <input type="hidden" th:name="pageNumber" th:value="${currentPage}">
                     <input type="hidden" th:name="sortField" th:value="secondName">
                     <input type="hidden" th:name="sortDirection" th:value="DESC">
                 </button>
@@ -90,6 +99,9 @@
         <td th:if="${employee.position.contains(positions[1])}">
             <form th:action="@{/deleteEmployee}" th:if="${emp.employeeId != employee.employeeId}">
                 <input th:type="hidden" th:value="${emp.employeeId}" name="employeeIdDelete">
+                <input type="hidden" th:name="pageNumber" th:value="${currentPage}">
+                <input type="hidden" th:name="sortField" th:value="${sortField}">
+                <input type="hidden" th:name="sortDirection" th:value="${sortDirection}">
                 <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash3-fill"></i></button>
             </form>
         </td>
@@ -102,7 +114,7 @@
             <ul class="pagination justify-content-center">
                 <li class="page-item">
                     <a th:if="${currentPage > 1}" class="page-link"
-                       th:href="@{'/showAllEmployees/1' + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}"
+                       th:href="@{'/showAllEmployees?pageNumber=1' + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}"
                        th:text="#{label.pagination.first}">First</a>
                     <span th:unless="${currentPage > 1}" th:text="#{label.pagination.first}">First</span>
                 </li>
@@ -112,7 +124,7 @@
                 <span th:each="i: ${#numbers.sequence(1, totalPages)}">
                     <span><li class="page-item">
                         <a th:if="${i != currentPage}" class="page-link"
-                           th:href="@{'/showAllEmployees/' + ${i} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
+                           th:href="@{'/showAllEmployees?pageNumber=' + ${i} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
                         <span class="page-link" th:unless="${i != currentPage}">[[${i}]]</span>
         </li></span>
     </span>
@@ -121,7 +133,7 @@
                 &nbsp;
                 <li class="page-item">
                     <a th:if="${currentPage < totalPages}" class="page-link"
-                       th:href="@{'/showAllEmployees/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}"
+                       th:href="@{'/showAllEmployees?pageNumber=' + ${totalPages} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}"
                        th:text="#{label.pagination.last}">Last</a>
                     <span th:unless="${currentPage < totalPages}" th:text="#{label.pagination.last}">Last</span>
                 </li>

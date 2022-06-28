@@ -19,8 +19,8 @@ public class ShowAllBillsController {
     @Autowired
     BillService billService;
 
-    @GetMapping("/showAllBills/{pageNumber}")
-    public String showAllBills(Model model, @PathVariable("pageNumber") int currentPage,
+    @GetMapping("/showAllBills")
+    public String showAllBills(Model model, @RequestParam("pageNumber") int currentPage,
                                @RequestParam("sortField") String sortField,
                                @RequestParam("sortDirection") String sortDirection) {
         Page<Bill> page = billService.findAll(currentPage, sortField, sortDirection);

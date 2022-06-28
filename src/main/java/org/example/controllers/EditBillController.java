@@ -4,6 +4,8 @@ import org.example.model.Bill;
 import org.example.model.Warehouse;
 import org.example.secvices.BillService;
 import org.example.secvices.WarehouseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,10 +26,18 @@ public class EditBillController {
     @Autowired
     WarehouseService warehouseService;
 
+    private static Logger logger = LoggerFactory.getLogger(EditBillController.class);
+
     @GetMapping("/editBill")
-    public String goToEditBillPage(Model model, @RequestParam("idEdit") int id) {
+    public String goToEditBillPage(Model model, @RequestParam("idEdit") int id,
+                                   @RequestParam("pageNumber") int pageNumber,
+                                   @RequestParam("sortField") String sortField,
+                                   @RequestParam("sortDirection") String sortDirection) {
         Bill bill = billService.findBillById(id);
         model.addAttribute("bill", bill);
+        model.addAttribute("pageNumber", pageNumber);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDirection", sortDirection);
         return "editBill";
     }
 
@@ -37,6 +47,9 @@ public class EditBillController {
                            @RequestParam("amountWas") int amountWas,
                            @RequestParam("amount") int amount,
                            @RequestParam("price") int price,
+                           @RequestParam("pageNumber") int pageNumber,
+                           @RequestParam("sortField") String sortField,
+                           @RequestParam("sortDirection") String sortDirection,
                            HttpServletRequest req) {
         Bill bill = billService.findBillById(id);
         Warehouse warehouse = warehouseService.findByProduct(bill.getBody());
@@ -52,6 +65,7 @@ public class EditBillController {
             }else{
                 req.setAttribute("createBillError", 0);
                 model.addAttribute("bill", bill);
+                logger.warn("Bill {} was`t edit from old amount {} to new amount {}", bill, amountWas, amount);
                 return "editBill";
             }
         } else {
@@ -62,6 +76,7 @@ public class EditBillController {
             bill.setPrice(price);
             billService.save(bill);
         }
-        return "redirect:/showAllBills/1?sortField=billId&sortDirection=ASC";
+        logger.debug("Bill {} was edited from old amount {} to new amount {}", bill, amountWas, amount);
+        return "redirect:/showAllBills?pageNumber=" + pageNumber + "&sortField=" + sortField + "&sortDirection=" + sortDirection;
     }
 }

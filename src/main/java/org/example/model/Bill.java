@@ -35,4 +35,16 @@ public class Bill {
 
     @Column(name = "confirmation")
     private boolean confirmation;
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "billId=" + billId +
+                ", product=" + product +
+                ", body='" + body + '\'' +
+                ", amount=" + amount +
+                ", price=" + price +
+                ", confirmation=" + confirmation +
+                '}';
+    }
 }

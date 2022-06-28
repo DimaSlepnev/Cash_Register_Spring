@@ -19,19 +19,29 @@ public class ConfirmBillController {
     BillService billService;
 
     @GetMapping("/confirmBill")
-    public String goToConfirmationPage(Model model, @RequestParam("idConfirm") int id){
+    public String goToConfirmationPage(Model model, @RequestParam("idConfirm") int id,
+                                       @RequestParam("pageNumber") int pageNumber,
+                                       @RequestParam("sortField") String sortField,
+                                       @RequestParam("sortDirection") String sortDirection) {
         Bill bill = billService.findBillById(id);
         model.addAttribute("bill", bill);
+        model.addAttribute("pageNumber", pageNumber);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDirection", sortDirection);
         return "confirmBill";
     }
 
     @PostMapping("/confirmBill")
-    public String confirmBill(Model model, @RequestParam("id") int id, @RequestParam("confirmation") String confirmation){
-        if(confirmation.equals("yes")){
+    public String confirmBill(Model model, @RequestParam("id") int id,
+                              @RequestParam("confirmation") String confirmation,
+                              @RequestParam("pageNumber") int pageNumber,
+                              @RequestParam("sortField") String sortField,
+                              @RequestParam("sortDirection") String sortDirection) {
+        if (confirmation.equals("yes")) {
             Bill bill = billService.findBillById(id);
             bill.setConfirmation(true);
             billService.save(bill);
         }
-        return "redirect:/showAllBills/1?sortField=billId&sortDirection=ASC";
+        return "redirect:/showAllBills?pageNumber=" + pageNumber + "&sortField=" + sortField + "&sortDirection=" + sortDirection;
     }
 }

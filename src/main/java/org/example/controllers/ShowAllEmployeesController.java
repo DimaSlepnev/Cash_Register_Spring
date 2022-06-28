@@ -18,8 +18,8 @@ public class ShowAllEmployeesController {
     @Autowired
     EmployeeService employeeService;
 
-    @GetMapping("/showAllEmployees/{pageNumber}")
-    public String showAllEmployees(Model model, @PathVariable("pageNumber") int currentPage,
+    @GetMapping("/showAllEmployees")
+    public String showAllEmployees(Model model, @RequestParam("pageNumber") int currentPage,
                                    @RequestParam("sortField") String sortField,
                                    @RequestParam("sortDirection") String sortDirection) {
         Page<Employee> page = employeeService.findAllEmployees(currentPage, sortField, sortDirection);

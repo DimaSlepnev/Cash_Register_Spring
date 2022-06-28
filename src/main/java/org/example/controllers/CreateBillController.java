@@ -6,6 +6,8 @@ import org.example.model.Warehouse;
 import org.example.secvices.BillService;
 import org.example.secvices.WarehouseService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,8 @@ public class CreateBillController {
     @Autowired
     ModelMapper modelMapper;
 
+    private static Logger logger = LoggerFactory.getLogger(CreateBillController.class);
+
     @GetMapping("/createBill")
     public String goToCreateBillView() {
         return "createBill";
@@ -48,6 +52,7 @@ public class CreateBillController {
                 warehouseService.save(warehouse);
                 billService.save(bill);
             } else {
+                logger.warn("Bill {} was`t add", bill);
                 req.setAttribute("createBillError", 0);
             }
         } catch (Exception e) {
@@ -59,6 +64,7 @@ public class CreateBillController {
                 warehouseService.save(warehouse);
                 billService.save(bill);
             } else {
+                logger.warn("Bill {} was`t add", bill);
                 req.setAttribute("createBillError", 0);
             }
         }

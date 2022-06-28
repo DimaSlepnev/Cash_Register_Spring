@@ -12,19 +12,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class DeleteEmployeeController {
 
+
     @Autowired
     EmployeeService employeeService;
 
     @GetMapping("/deleteEmployee")
-    public String goToDeleteEmployeePage(Model model, @RequestParam("employeeIdDelete") int id){
+    public String goToDeleteEmployeePage(Model model, @RequestParam("employeeIdDelete") int id,
+                                         @RequestParam("pageNumber") int pageNumber,
+                                         @RequestParam("sortField") String sortField,
+                                         @RequestParam("sortDirection") String sortDirection) {
         Employee employee = employeeService.findEmployeeById(id);
-        model.addAttribute("employee",employee);
+        model.addAttribute("employee", employee);
+        model.addAttribute("pageNumber", pageNumber);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDirection", sortDirection);
         return "deleteEmployee";
     }
 
     @PostMapping("/deleteEmployee")
-    public String deleteEmployee(Model model, @RequestParam("id") int id){
+    public String deleteEmployee(Model model, @RequestParam("id") int id,
+                                 @RequestParam("pageNumber") int pageNumber,
+                                 @RequestParam("sortField") String sortField,
+                                 @RequestParam("sortDirection") String sortDirection) {
         employeeService.deleteEmployeeById(id);
-        return "redirect:/showAllEmployees";
+        return "redirect:/showAllEmployees?pageNumber=" + pageNumber + "&sortField=" + sortField + "&sortDirection=" + sortDirection;
     }
 }

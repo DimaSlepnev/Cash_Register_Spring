@@ -14,7 +14,7 @@
 <table class="table table-striped" id="warehouseTable">
     <thead>
     <tr>
-        <th scope="col" th:text="#{label.product.id}">Product Id
+        <th scope="col"><span th:text="#{label.product.id}"/>
             <form th:action="@{'/showWarehouse/' + ${currentPage}}">
                 <button class="btn btn-outline-primary" type="submit">
                     <i class="bi bi-arrow-bar-up"></i>
@@ -30,7 +30,7 @@
                 </button>
             </form>
         </th>
-        <th scope="col" th:text="#{label.product}">Product name
+        <th scope="col"><span th:text="#{label.product}"/>
             <form th:action="@{'/showWarehouse/' + ${currentPage}}">
                 <button class="btn btn-outline-primary" type="submit">
                     <i class="bi bi-arrow-bar-up"></i>
@@ -46,7 +46,7 @@
                 </button>
             </form>
         </th>
-        <th scope="col" th:text="#{label.amount}">Product`s amount
+        <th scope="col"><span th:text="#{label.amount}"/>
             <form th:action="@{'/showWarehouse/' + ${currentPage}}">
                 <button class="btn btn-outline-primary" type="submit">
                     <i class="bi bi-arrow-bar-up"></i>
@@ -62,7 +62,7 @@
                 </button>
             </form>
         </th>
-        <th scope="col" th:text="#{label.id.of.expert.that.made.order}">Id of expert, that made order
+        <th scope="col"><span th:text="#{label.id.of.expert.that.made.order}"/>
             <form th:action="@{'/showWarehouse/' + ${currentPage}}">
                 <button class="btn btn-outline-primary" type="submit">
                     <i class="bi bi-arrow-bar-up"></i>

@@ -37,7 +37,7 @@
                             employee</a>
                     </li>
                     <li class="nav-item active" th:if="${employee.position.contains(positions[1])}">
-                        <a class="nav-link" th:href="@{/showAllBills/1?sortField=billId&sortDirection=ASC}"
+                        <a class="nav-link" th:href="@{/showAllBills?pageNumber=1&sortField=billId&sortDirection=ASC}"
                            th:text="#{header.all.bills}">All
                             bills</a>
                     </li>
@@ -49,13 +49,13 @@
                         <a class="nav-link" th:href="@{/createBill}" th:text="#{header.create.bill}">Create Bill</a>
                     </li>
                     <li class="nav-item active" th:if="${employee.position.contains(positions[2])}">
-                        <a class="nav-link" th:href="@{/showAllBills/1?sortField=billId&sortDirection=ASC}"
+                        <a class="nav-link" th:href="@{/showAllBills?pageNumber=1&sortField=billId&sortDirection=ASC}"
                            th:text="#{header.all.bills}">All
                             bills</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/showAllEmployees/1?sortField=employeeId&sortDirection=ASC}"
+                        <a class="nav-link" th:href="@{/showAllEmployees?pageNumber=1&sortField=employeeId&sortDirection=ASC}"
                            th:text="#{header.all.employees}">All
                             Employees</a>
                     </li>
@@ -76,7 +76,16 @@
                aria-pressed="true" th:text="#{dropdown.select.en}">English</a>
             <a href="?lang=ua" class="btn btn-primary btn-sm active" style="margin: 0 20px; width: 100px" role="button"
                aria-pressed="true" th:text="#{dropdown.select.ua}">Ukranian</a>
+
         </div>
     </div>
 </nav>
+<!--<script>
+   /* var currentPath1 = window.location.pathname;*/
+    var currentPath2 = window.location.search;
+    var currentPath = /*currentPath1 +*/ currentPath2;
+    document.getElementById("currentPath").innerHTML = currentPath;
+    document.getElementById("link1").href += currentPath + "?lang=en";
+    document.getElementById("link2").href += currentPath + "?lang=ua";
+</script>-->
 </html>
