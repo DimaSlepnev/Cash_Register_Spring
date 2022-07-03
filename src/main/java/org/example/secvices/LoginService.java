@@ -23,7 +23,7 @@ public class LoginService implements ILoginService {
 
     private static Logger logger = LoggerFactory.getLogger(LoginService.class);
 
-    @Autowired
+
     public LoginService(EmployeeRepository employeeRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeRepository;
         this.modelMapper = modelMapper;

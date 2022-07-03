@@ -7,6 +7,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -46,7 +48,7 @@ class EmployeeServiceTest {
     @Test
     void deleteEmployeeById() {
         doNothing().when(employeeRepository).deleteEmployeeByEmployeeId(0);
-        employeeRepository.deleteEmployeeByEmployeeId(0);
+        employeeService.deleteEmployeeById(0);
         verify(employeeRepository,times(1)).deleteEmployeeByEmployeeId(0);
     }
 
@@ -56,5 +58,11 @@ class EmployeeServiceTest {
         doReturn(employee).when(employeeRepository).findEmployeeByEmployeeId(0);
         Employee employee1 = employeeService.findEmployeeById(0);
         verify(employeeRepository,times(1)).findEmployeeByEmployeeId(0);
+    }
+
+    @Test
+    void testFindAllEmployees() {
+        Page<Employee> employees = employeeService.findAllEmployees(1,"name","ASC");
+        verify(employeeRepository,times(1)).findAll(any(Pageable.class));
     }
 }

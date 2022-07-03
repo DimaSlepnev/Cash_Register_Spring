@@ -18,7 +18,6 @@ public class MyErrorController implements ErrorController {
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-
         if (status != null) {
             Integer statusCode = Integer.valueOf(status.toString());
 
@@ -36,7 +35,6 @@ public class MyErrorController implements ErrorController {
         log(500, request);
         return "error/500";
     }
-
     private void log(Integer statusCode, HttpServletRequest request) {
         logger.warn("User get error {} from path {}", statusCode, request.getRequestURI());
     }

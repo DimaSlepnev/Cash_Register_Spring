@@ -7,6 +7,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -47,7 +49,7 @@ class WarehouseServiceTest {
     @Test
     void save() {
         Warehouse warehouse = new Warehouse();
-        warehouseRepository.save(warehouse);
+        warehouseService.save(warehouse);
         verify(warehouseRepository,times(1)).save(warehouse);
     }
 
@@ -57,7 +59,6 @@ class WarehouseServiceTest {
         doReturn(warehouse).when(warehouseRepository).findAll();
         Iterable<Warehouse> warehouseList = warehouseRepository.findAll();
         verify(warehouseRepository,times(1)).findAll();
-
     }
 
     @Test
@@ -70,9 +71,15 @@ class WarehouseServiceTest {
 
     @Test
     void deleteById() {
-        doNothing().when(warehouseRepository).deleteById((long) 0);
-        warehouseRepository.deleteById((long)0);
-        verify(warehouseRepository,times(1)).deleteById((long) 0);
+        doNothing().when(warehouseRepository).deleteWarehouseByProductId(0);
+        warehouseService.deleteById(0);
+        verify(warehouseRepository,times(1)).deleteWarehouseByProductId(0);
 
+    }
+
+    @Test
+    void testFindAll() {
+        Page<Warehouse> warehouse = warehouseService.findAll(1,"name","ASC");
+        verify(warehouseRepository,times(1)).findAll(any(Pageable.class));
     }
 }

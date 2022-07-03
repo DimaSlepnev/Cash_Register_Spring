@@ -3,6 +3,8 @@ package org.example.model;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Collections;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -34,13 +36,13 @@ public class EmployeeTest {
 
         employee.setLogin("login");
         verify(employee, times(1)).setLogin("login");
-        assertEquals("login", employee.getLogin());
-        verify(employee, times(1)).getLogin();
+        assertEquals("login", employee.getUsername());
+        verify(employee, times(1)).getUsername();
 
         employee.setPass("pass");
         verify(employee, times(1)).setPass("pass");
-        assertEquals("pass", employee.getPass());
-        verify(employee, times(1)).getPass();
+        assertEquals("pass", employee.getPassword());
+        verify(employee, times(1)).getPassword();
 
         employee.setWarehouse(warehouse);
         verify(employee, times(1)).setWarehouse(warehouse);

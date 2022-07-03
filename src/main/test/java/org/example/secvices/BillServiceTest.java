@@ -7,6 +7,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -37,21 +39,27 @@ class BillServiceTest {
     void findBillById() {
         Bill bill = new Bill();
         doReturn(bill).when(billRepository).findBillById(0);
-        Bill bill1 = billRepository.findBillById(0);
+        Bill bill1 = billService.findBillById(0);
         verify(billRepository,times(1)).findBillById(0);
     }
 
     @Test
     void deleteBillById() {
         doNothing().when(billRepository).deleteBillByBillId(0);
-        billRepository.deleteBillByBillId(0);
+        billService.deleteBillById(0);
         verify(billRepository,times(1)).deleteBillByBillId(0);
     }
 
     @Test
     void save() {
         Bill bill = new Bill();
-        billRepository.save(bill);
+        billService.save(bill);
         verify(billRepository,times(1)).save(bill);
+    }
+
+    @Test
+    void testFindAll() {
+        Page<Bill> bills = billService.findAll(1,"name","ASC");
+        verify(billRepository,times(1)).findAll(any(Pageable.class));
     }
 }

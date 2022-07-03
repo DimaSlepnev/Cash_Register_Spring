@@ -1,47 +1,46 @@
 package org.example.controllers;
 
 import org.example.model.Employee;
-import org.example.repository.EmployeeRepository;
 import org.example.secvices.EmployeeService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.ui.Model;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
-
+@ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class DeleteEmployeeControllerTest {
+class DeleteEmployeeControllerTest {
 
-    @Autowired
-    private DeleteEmployeeController deleteEmployeeController;
+    @Spy
+    @InjectMocks
+    DeleteEmployeeController deleteEmployeeController;
 
-    @MockBean
+    @Mock
     EmployeeService employeeService;
 
-    @MockBean
-    EmployeeRepository employeeRepository;
-
     @Test
-    public void goToDeleteEmployeePage() {
-       /* assertThat(deleteEmployeeController).isNotNull();*/
-       /* Model model = mock(Model.class);
-        Employee employee = new Employee();
-        employee.setEmployeeId(1);
-        *//*doReturn(employee).when(employeeRepository).findEmployeeByEmployeeId(1);*//*
-        String template = deleteEmployeeController.goToDeleteEmployeePage(model, 1,1,"Id","ASC");
-        assertEquals(template,"deleteEmployee");*/
+    void goToDeleteEmployeePage() {
+        Employee employee = mock(Employee.class);
+        doReturn(employee).when(employeeService).findEmployeeById(0);
+        Model model = mock(Model.class);
+        String template = deleteEmployeeController.goToDeleteEmployeePage(model,0,1,"name","ASC");
+        verify(model,times(4)).addAttribute(any(),any());
+        assertEquals("deleteEmployee", template);
     }
 
     @Test
-    public void deleteEmployee() {
+    void deleteEmployee() {
+        doNothing().when(employeeService).deleteEmployeeById(0);
+        Model model = mock(Model.class);
+        String template = deleteEmployeeController.deleteEmployee(model,0,1,"name","ASC");
+        verify(employeeService,times(1)).deleteEmployeeById(0);
+        assertNotNull(template);
     }
 }
